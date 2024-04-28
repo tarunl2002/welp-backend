@@ -1,21 +1,13 @@
-import express from 'express';
+const express = require('express');
+const app = express();
+const port = 3000;
 
-//import routes from './routes';
+// Define a route for the homepage
+app.get('/', (req, res) => {
+    res.send('Hello, Express!');
+});
 
-class Index {
-  constructor() {
-    this.server = express();
-    this.middlewares();
-    this.routes();
-  }
-
-  middlewares() {
-    this.server.use(express.json());
-  }
-
-  routes() {
-    //this.server.use(routes);
-  }
-}
-
-export default new Index().server;
+// Start the server
+app.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}`);
+});
