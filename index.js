@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const port = 3000;
+const bodyParser = require('body-parser')
 
 // const randomLocation = require('random-location');
 // app.get('/random-location', (req, res) => {
@@ -15,18 +16,22 @@ const port = 3000;
 //     res.json(randomPoint);
 //     console.log(randomPoint);
 // });
+app.use(bodyParser.json());
 
 let heartRate = null;
 
 // POST endpoint to add heart rate data
 app.post('/api/heartrate', (req, res) => {
+    console.log('Received POST request:', req.body);
     const { heart_rate } = req.body;
 
     if (!heart_rate) {
+        console.log('Missing heart_rate field');
         return res.status(400).json({ error: 'Missing heart_rate field' });
     }
 
     heartRate = { heart_rate };
+    console.log('Heart rate data added:', heartRate);
     return res.status(201).json({ message: 'Heart rate data added successfully' });
 });
 
