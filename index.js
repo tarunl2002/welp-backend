@@ -1,7 +1,10 @@
 const express = require('express');
+const twilio = require('twilio');
+require('dotenv').config();
 const app = express();
 const port = 3000;
 const bodyParser = require('body-parser')
+
 
 // const randomLocation = require('random-location');
 // app.get('/random-location', (req, res) => {
@@ -43,6 +46,33 @@ app.get('/api/heartrate', (req, res) => {
 
     return res.status(200).json({ heart_rate: heartRate });
 });
+const accountSid = process.env.SID;
+const authToken = process.env.TOKEN;
+const twilioClient = twilio(accountSid, authToken);
+
+// POST endpoint to send an SMS message
+app.post('/api/send-sms', (req, res) => {
+    const { phoneNumber, message } = req.body;
+
+    if (!phoneNumber || !message) {
+        return res.status(400).json({ error: 'Missing phone number or message' });
+    }
+
+    twilioClient.messages
+        .create({
+            body: message,
+            from: process.env.PHONE, // Your Twilio phone number
+            to: phoneNumber
+        })
+        .then(() => {
+            return res.status(200).json({ message: 'SMS sent successfully' });
+        })
+        .catch(err => {
+            console.error('Error sending SMS:', err);
+            return res.status(500).json({ error: 'Failed to send SMS' });
+        });
+});
+
 
 // Start the server
 app.listen(port, () => {
