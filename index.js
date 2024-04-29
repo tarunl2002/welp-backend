@@ -44,7 +44,7 @@ app.get('/api/heartrate', (req, res) => {
         return res.status(404).json({ error: 'Heart rate data not found' });
     }
 
-    return res.status(200).json({ heart_rate: heartRate });
+    return res.status(200).json(heartRate);
 });
 const accountSid = process.env.SID;
 const authToken = process.env.TOKEN;
