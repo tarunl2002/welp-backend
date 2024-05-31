@@ -73,6 +73,34 @@ app.post('/api/send-sms', (req, res) => {
         });
 });
 
+const walletData = {};
+app.post('/wallet', (req, res) => {
+    const { wallet_id, rate, no_of_credits } = req.body;
+  
+    if (!wallet_id || rate === undefined || no_of_credits === undefined) {
+      return res.status(400).json({ error: 'Invalid input' });
+    }
+  
+    walletData[wallet_id] = {
+      rate,
+      no_of_credits
+    };
+  
+    res.json({ message: 'Wallet information added successfully' });
+  });
+  
+  // Endpoint to handle GET requests for retrieving wallet information
+  app.get('/wallet/:wallet_id', (req, res) => {
+    const { wallet_id } = req.params;
+    const walletInfo = walletData[wallet_id];
+  
+    if (!walletInfo) {
+      return res.status(404).json({ error: 'Wallet not found' });
+    }
+  
+    res.json(walletInfo);
+  });
+
 
 // Start the server
 app.listen(port, () => {
