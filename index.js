@@ -73,7 +73,7 @@ app.post('/api/send-sms', (req, res) => {
         });
 });
 
-let walletData = {};
+let walletData = [];
 app.post('/wallet', (req, res) => {
     const { wallet_id, rate, no_of_credits, name } = req.body;
   
@@ -81,12 +81,14 @@ app.post('/wallet', (req, res) => {
       return res.status(400).json({ error: 'Invalid input' });
     }
   
-    walletData = {
+    newWallet = {
       wallet_id,
     name,
       rate,
       no_of_credits
     };
+
+    walletData.push(newWallet);
   
     res.json({ message: 'Wallet information added successfully' });
   });
