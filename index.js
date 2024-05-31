@@ -89,6 +89,11 @@ app.post('/wallet', (req, res) => {
   
     res.json({ message: 'Wallet information added successfully' });
   });
+
+  app.get('/wallet', (req,res) => {
+    const walletInfo = walletData;
+    res.json(walletData);
+  })
   
   // Endpoint to handle GET requests for retrieving wallet information
   app.get('/wallet/:wallet_id', (req, res) => {
