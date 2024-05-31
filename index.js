@@ -73,7 +73,7 @@ app.post('/api/send-sms', (req, res) => {
         });
 });
 
-const walletData = {};
+let walletData = {};
 app.post('/wallet', (req, res) => {
     const { wallet_id, rate, no_of_credits, name } = req.body;
   
