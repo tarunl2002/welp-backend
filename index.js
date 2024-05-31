@@ -81,7 +81,8 @@ app.post('/wallet', (req, res) => {
       return res.status(400).json({ error: 'Invalid input' });
     }
   
-    walletData[wallet_id] = {
+    walletData = {
+      wallet_id,
     name,
       rate,
       no_of_credits
